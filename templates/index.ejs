@@ -22,13 +22,13 @@
         </thead>
 
        <tbody>
-            <% course.forEach(item => { %>
+            <% data.forEach(item => { %>
                 <tr scope="row">
-                    <td><%= item.id %></td>
+                    <td><%= item.book_id %></td>
                     <td><%= item.name %></td>
-                    <td><%= item.course_type %></td>
-                    <td><%= item.semester %></td>
-                    <td><%= item.department %></td>
+                    <td><%= item.img %></td>
+                    <td><%= item.quality %></td>
+                    
                 </tr>
             <% }) %>
        </tbody>
@@ -44,15 +44,15 @@
           </div>
           <div class="mb-3 form-check">
             <input type="text" class="form-check-label" name = "source_type">
-            <label class="form-check-label">Source_type</label>
+            <label class="form-check-label">img</label>
           </div>
           <div class="mb-3 form-check">
             <input type="text" class="form-check-label" name="semester">
-            <label class="form-check-label">Semester</label>
+            <label class="form-check-label">quality</label>
           </div>
           <div class="mb-3 form-check">
-            <input type="text" class="form-check-label" name="department" >
-            <label class="form-check-label" >department</label>
+            <input type="file" class="form-check-label" name="image" accept="image/*">
+            <label class="form-check-label" >image</label>
           </div>
           <button type="submit" class="btn btn-primary">Add</button>
       </form>
