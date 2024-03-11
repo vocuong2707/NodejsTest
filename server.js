@@ -1,17 +1,20 @@
 const express = require('express');
 const multer = require('multer');
 const app = express();
+const path = require("path");
 // const course = require('./Store')
- AWS_SDK_LOAD_CONFIG=1
+
 
 // AWS
 const AWS = require("aws-sdk");
 require("dotenv").config();
+
+// AWS_SDK_LOAD_CONFIG="1"
 // cau hinh AWS
 AWS.config.update({
     region: process.env.REGION,
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKeyId:process.env.SECRET_ACCESS_KEY
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
 })
 // khoi tao AWS S3  , DynamoDb
 const s3 = new AWS.S3();
@@ -43,7 +46,7 @@ const checkFile = function(file,cb){
     const fileType = /jpeg|jpg|png|gif/;
     const extname = fileType.test(path.extname(file.originalname).toLowerCase());
     const mimetype = fileType.test(file.mimetype);
-    if(ext && mimetype) {
+    if(extname && mimetype) {
         return cb(null,true);
     }
     return cb("Error : Image Only Pls!");
@@ -64,8 +67,13 @@ app.get('/',async (req,res)=>{
 });
 
 
-app.post('/', upload.fields([]), (req,res)=> {
-    course.push(req.body);
+app.post('/save', upload.single('image'), (req,res)=> {
+    // const img = req.file.originalname.split('.');
+    const newCourse = {
+        ...req.body,
+        image: req.file.key,
+      };
+    console.log(newCourse);
     return res.redirect('/');
 })
 
